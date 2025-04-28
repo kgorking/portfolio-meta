@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  portfolio-meta:
+    image: ${DOCKER_REGISTRY-}portfoliometa
+    build:
+      context: .
+      dockerfile: portfolio-meta/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    ports: 
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
