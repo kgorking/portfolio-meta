@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   portfolio-meta:
     image: ${DOCKER_REGISTRY-}portfoliometa
