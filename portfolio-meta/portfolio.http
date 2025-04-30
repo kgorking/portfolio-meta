@@ -1,6 +1,5 @@
 ﻿@portfolio_HostAddress = https://localhost:8081
 
-GET {{portfolio_HostAddress}}/entries
-Accept: application/json
+GET {{portfolio_HostAddress}}/api/entries
 
 ###
