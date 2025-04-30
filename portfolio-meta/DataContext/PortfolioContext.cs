@@ -15,6 +15,16 @@ namespace DataContext
             modelBuilder.Entity<EntryTag>()
                 .HasIndex(et => new { et.EntryID, et.TagID })
                 .IsUnique();
+
+            // Unique titles for tags
+            modelBuilder.Entity<Tag>()
+                .HasIndex(tag => tag.Title)
+                .IsUnique();
+
+            // Unique titles for entries
+            modelBuilder.Entity<Entry>()
+                .HasIndex(entry => entry.Title)
+                .IsUnique();
         }
 
         // Make sure that a connection to the database can be established
