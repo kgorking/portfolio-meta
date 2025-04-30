@@ -2,7 +2,7 @@
 
 namespace Models
 {
-    // A simple model that link a tag to an entry
+    // A simple model that links a tag to an entry
     public class EntryTag
     {
         public int ID { get; set; }
