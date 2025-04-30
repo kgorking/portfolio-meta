@@ -21,13 +21,13 @@ jobs:
       with:
         dotnet-version: '9.0.x'
 
-    # Restore dependencies
+    # Restore dependencies for tests
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore portfolio-test
 
     # Run tests
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test portfolio-test --no-build --verbosity normal
 
     # Build the Docker image
     - name: Build the Docker image
