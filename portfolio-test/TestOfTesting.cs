@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace portfolio_test
 {
+    // Simple test to ensure that the testing harness works.
     [TestClass]
-    public sealed class Test1
+    public sealed class TestOfTesting
     {
         private static DbContextOptions<PortfolioContext> _options = new DbContextOptionsBuilder<PortfolioContext>()
                 .UseInMemoryDatabase("TestDatabase")
@@ -21,7 +22,7 @@ namespace portfolio_test
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestDatabaseWorks()
         {
             using var ctx = new PortfolioContext(_options);
             Assert.IsTrue(ctx.Database.EnsureCreated());

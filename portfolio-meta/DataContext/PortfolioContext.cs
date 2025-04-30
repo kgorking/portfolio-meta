@@ -7,6 +7,9 @@ namespace DataContext
     {
         public async Task<bool> TestConnectionAsync()
         {
+            if (Database.IsInMemory())
+                return true;
+
             try
             {
                 await this.Database.OpenConnectionAsync();
