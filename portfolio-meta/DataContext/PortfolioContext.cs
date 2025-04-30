@@ -7,7 +7,17 @@ namespace DataContext
     {
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<EntryTag> EntryTags { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Ensure that only one EntryTag with a specific tag/entry id combination exists
+            modelBuilder.Entity<EntryTag>()
+                .HasIndex(et => new { et.EntryID, et.TagID })
+                .IsUnique();
+        }
+
+        // Make sure that a connection to the database can be established
         public async Task<bool> TestConnectionAsync()
         {
             if (Database.IsInMemory())
