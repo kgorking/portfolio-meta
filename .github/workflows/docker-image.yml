@@ -14,5 +14,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    # Set up .NET environment
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    # Restore dependencies for tests
+    - name: Restore dependencies for tests
+      run: dotnet restore portfolio-test
+
+    # Restore dependencies for tests
+    - name: Build tests
+      run: dotnet build portfolio-test
+
+    # Run tests
+    - name: Run tests
+      run: dotnet test portfolio-test --no-build --verbosity normal
+
+    # Build the Docker image
     - name: Build the Docker image
       run: docker build . --file portfolio-meta/Dockerfile --tag portfolio-image:$(date +%s)
