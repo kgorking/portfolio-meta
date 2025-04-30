@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 namespace DataContext
 {
-    public class PortfolioContext : DbContext
+    public class PortfolioContext(DbContextOptions<PortfolioContext> options) : DbContext(options)
     {
-        public PortfolioContext(DbContextOptions<PortfolioContext> options) : base(options) { }
-
         public async Task<bool> TestConnectionAsync()
         {
             try
