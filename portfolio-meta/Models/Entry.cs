@@ -18,5 +18,8 @@ namespace Models
 
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
+
+        // All the tags used by this entry
+        public ICollection<Tag>? Tags { get; }
     }
 }
