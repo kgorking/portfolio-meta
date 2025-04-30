@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Models;
+using portfolio.Models;
 
-namespace DataContext
+namespace portfolio.DataContext
 {
     public class PortfolioContext(DbContextOptions<PortfolioContext> options) : DbContext(options)
     {
@@ -25,11 +25,28 @@ namespace DataContext
             modelBuilder.Entity<Entry>()
                 .HasIndex(entry => entry.Title)
                 .IsUnique();
+
+            // Enforce UTC for DateTime
+            modelBuilder.Entity<Entry>()
+                .Property(e => e.Created)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
+
+            modelBuilder.Entity<Entry>()
+                .Property(e => e.LastUpdated)
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                );
         }
 
         // Make sure that a connection to the database can be established
         public async Task<bool> TestConnectionAsync()
         {
+            await Database.EnsureCreatedAsync();
+
             if (Database.IsInMemory())
                 return true;
 

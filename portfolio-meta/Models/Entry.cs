@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models
+namespace portfolio.Models
 {
     public class Entry
     {
@@ -16,7 +16,7 @@ namespace Models
         [Required(ErrorMessage = "Content is required.")]
         public string? Content { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
-        public DateTime LastUpdated { get; set; } = DateTime.Now;
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
     }
 }

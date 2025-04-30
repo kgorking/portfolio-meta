@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\portfolio-meta\portfolio-meta.csproj" />
+    <ProjectReference Include="..\portfolio-meta\portfolio.csproj" />
   </ItemGroup>
 
   <ItemGroup>

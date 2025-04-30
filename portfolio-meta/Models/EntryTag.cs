@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models
+namespace portfolio.Models
 {
     // A simple model that links a tag to an entry
     public class EntryTag

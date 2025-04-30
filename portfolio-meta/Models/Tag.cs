@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models
+namespace portfolio.Models
 {
     // Describes a simple tag that can be attached to an entry,
     // to give some context regarding its contents.
