@@ -1,5 +1,5 @@
 using portfolio.DataContext;
-using Models;
+using portfolio.Models;
 
 namespace portfolio_test;
 

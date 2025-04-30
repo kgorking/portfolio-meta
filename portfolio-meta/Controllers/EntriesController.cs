@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using portfolio.Models;
 using portfolio.DataContext;
-using Models;
 
 namespace portfolio.Controllers
 {
@@ -18,6 +13,14 @@ namespace portfolio.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Entries.ToListAsync());
+        }
+
+        // GET: api/entries
+        [Route("api/entries")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetEntriesApi()
+        {
+            return Json(await _context.Entries.ToListAsync());
         }
 
         // GET: Entries/Details/5
@@ -49,10 +52,12 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,Extract,Content,Created,LastUpdated")] Entry entry)
+        public async Task<IActionResult> Create([Bind("Title,Extract,Content")] Entry entry)
         {
             if (ModelState.IsValid)
             {
+                entry.Created = DateTime.UtcNow;
+                entry.LastUpdated = DateTime.UtcNow;
                 _context.Add(entry);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -81,7 +86,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Extract,Content,Created,LastUpdated")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("Title,Extract,Content")] Entry entry)
         {
             if (id != entry.ID)
             {
@@ -92,6 +97,7 @@ namespace portfolio.Controllers
             {
                 try
                 {
+                    entry.LastUpdated = DateTime.UtcNow;
                     _context.Update(entry);
                     await _context.SaveChangesAsync();
                 }

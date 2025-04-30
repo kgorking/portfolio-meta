@@ -1,6 +1,6 @@
 using portfolio.DataContext;
 using Microsoft.EntityFrameworkCore;
-using Models;
+using portfolio.Models;
 
 namespace portfolio_test;
 
