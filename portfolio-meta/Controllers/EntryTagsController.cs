@@ -1,31 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using portfolio.DataContext;
 using portfolio.Models;
 
 namespace portfolio.Controllers
 {
-    public class TagsController : Controller
+    public class EntryTagsController : Controller
     {
         private readonly PortfolioContext _context;
+        private readonly EntriesController _entries;
+        private readonly TagsController _tags;
 
-        public TagsController(PortfolioContext context)
+        public EntryTagsController(PortfolioContext context)
         {
             _context = context;
+            _entries = new EntriesController(_context);
+            _tags = new TagsController(_context);
         }
 
-        // GET: Tags
+        // GET: EntryTags
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tags.ToListAsync());
+            return View(await _context.EntryTags.ToListAsync());
         }
 
-        // GET: Tags/Details/5
+        // GET: EntryTags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +32,39 @@ namespace portfolio.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
+            var entryTag = await _context.EntryTags
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (tag == null)
+            if (entryTag == null)
             {
                 return NotFound();
             }
 
-            return View(tag);
+            return View(entryTag);
         }
 
-        // GET: Tags/Create
+        // GET: EntryTags/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tags/Create
+        // POST: EntryTags/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description")] Tag tag)
+        public async Task<IActionResult> Create([Bind("EntryID,TagID")] EntryTag entryTag)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && _entries.EntryExists(entryTag.EntryID) && _tags.TagExists(entryTag.TagID))
             {
-                _context.Add(tag);
+                _context.Add(entryTag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return View(entryTag);
         }
 
-        // GET: Tags/Edit/5
+        // GET: EntryTags/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +72,22 @@ namespace portfolio.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null)
+            var entryTag = await _context.EntryTags.FindAsync(id);
+            if (entryTag == null)
             {
                 return NotFound();
             }
-            return View(tag);
+            return View(entryTag);
         }
 
-        // POST: Tags/Edit/5
+        // POST: EntryTags/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Description")] Tag tag)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,EntryID,TagID")] EntryTag entryTag)
         {
-            if (id != tag.ID)
+            if (id != entryTag.ID)
             {
                 return NotFound();
             }
@@ -97,12 +96,12 @@ namespace portfolio.Controllers
             {
                 try
                 {
-                    _context.Update(tag);
+                    _context.Update(entryTag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TagExists(tag.ID))
+                    if (!EntryTagExists(entryTag.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +112,10 @@ namespace portfolio.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tag);
+            return View(entryTag);
         }
 
-        // GET: Tags/Delete/5
+        // GET: EntryTags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +123,34 @@ namespace portfolio.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
+            var entryTag = await _context.EntryTags
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (tag == null)
+            if (entryTag == null)
             {
                 return NotFound();
             }
 
-            return View(tag);
+            return View(entryTag);
         }
 
-        // POST: Tags/Delete/5
+        // POST: EntryTags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag != null)
+            var entryTag = await _context.EntryTags.FindAsync(id);
+            if (entryTag != null)
             {
-                _context.Tags.Remove(tag);
+                _context.EntryTags.Remove(entryTag);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        public bool TagExists(int id)
+        private bool EntryTagExists(int id)
         {
-            return _context.Tags.Any(e => e.ID == id);
+            return _context.EntryTags.Any(e => e.ID == id);
         }
     }
 }

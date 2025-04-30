@@ -148,7 +148,7 @@ namespace portfolio.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EntryExists(int id)
+        public bool EntryExists(int id)
         {
             return _context.Entries.Any(e => e.ID == id);
         }
