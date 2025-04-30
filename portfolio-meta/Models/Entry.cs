@@ -16,10 +16,7 @@ namespace Models
         [Required(ErrorMessage = "Content is required.")]
         public string? Content { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime LastUpdated { get; set; }
-
-        // All the tags used by this entry
-        public ICollection<Tag>? Tags { get; }
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
     }
 }
