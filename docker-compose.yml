@@ -11,9 +11,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
     depends_on:
-      - postgres
+      - portfolio-database
 
-  postgres:
+  portfolio-database:
     image: postgres:15
     container_name: postgres-db
     ports: 
