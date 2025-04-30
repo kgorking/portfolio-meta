@@ -1,5 +1,4 @@
 ﻿using DataContext;
-using Microsoft.EntityFrameworkCore;
 
 namespace portfolio_test
 {
@@ -7,10 +6,6 @@ namespace portfolio_test
     [TestClass]
     public sealed class TestOfTesting
     {
-        private static DbContextOptions<PortfolioContext> _options = new DbContextOptionsBuilder<PortfolioContext>()
-                .UseInMemoryDatabase("TestDatabase")
-                .Options;
-
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
@@ -24,7 +19,7 @@ namespace portfolio_test
         [TestMethod]
         public void TestDatabaseWorks()
         {
-            using var ctx = new PortfolioContext(_options);
+            using var ctx = new PortfolioContext(Config.DbOptions);
             Assert.IsTrue(ctx.Database.EnsureCreated());
         }
     }
