@@ -20,7 +20,7 @@ namespace portfolio_test
         public void TestDatabaseWorks()
         {
             using var ctx = new PortfolioContext(Config.DbOptions);
-            Assert.IsTrue(ctx.Database.EnsureCreated());
+            Assert.IsTrue(ctx.Database.CanConnect());
         }
     }
 }
