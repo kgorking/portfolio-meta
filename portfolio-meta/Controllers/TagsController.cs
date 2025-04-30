@@ -54,7 +54,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,Description")] Tag tag)
+        public async Task<IActionResult> Create([Bind("Title,Description")] Tag tag)
         {
             if (ModelState.IsValid)
             {
