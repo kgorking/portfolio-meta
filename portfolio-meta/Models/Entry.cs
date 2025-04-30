@@ -18,8 +18,5 @@ namespace Models
 
         public DateTime Created { get; set; } = DateTime.Now;
         public DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        // All the tags used by this entry
-        public ICollection<EntryTag>? EntryTags { get; }
     }
 }

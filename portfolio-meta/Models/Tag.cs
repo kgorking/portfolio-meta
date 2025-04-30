@@ -13,8 +13,5 @@ namespace Models
 
         [Required(ErrorMessage = "Description is required.")]
         public string? Description { get; set; }
-
-        // All the entries that use this tag
-        public ICollection<Entry>? Entries { get; }
     }
 }
