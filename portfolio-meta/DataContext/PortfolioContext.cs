@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Models;
 
 namespace DataContext
@@ -7,6 +6,7 @@ namespace DataContext
     public class PortfolioContext(DbContextOptions<PortfolioContext> options) : DbContext(options)
     {
         public DbSet<Entry> Entries { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public async Task<bool> TestConnectionAsync()
         {
