@@ -1,3 +1,4 @@
+@using Markdig
 @model portfolio.Models.Entry
 
 <div class="entry-container card-body d-flex">
@@ -6,6 +7,6 @@
     </div>
     <div class="entry-content">
         <h3>@Model.Title</h3>
-        <p>@Model.Content</p>
+        <p>@Html.Raw(Markdown.ToHtml(Model.Content ?? "- empty -"))</p>
     </div>
 </div>

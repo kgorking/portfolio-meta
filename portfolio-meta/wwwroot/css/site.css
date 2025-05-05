@@ -43,3 +43,7 @@ body {
     margin-right: 20px;
     width: 150px;
 }
+
+.courier-textarea {
+    font-family: 'Courier New', monospace;
+}
