@@ -10,7 +10,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
-      - ConnectionStrings__TestConnection=${TESTCONNECTION_STRING}
     depends_on:
       - portfolio-database
 
