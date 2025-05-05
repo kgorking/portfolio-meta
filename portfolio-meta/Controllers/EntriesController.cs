@@ -10,15 +10,10 @@ namespace portfolio.Controllers
         private readonly PortfolioContext _context = context;
 
         // GET: Entries
-        [Route("entries")]
-        [Route("api/entries")]
         public async Task<IActionResult> Index()
         {
             var entries = await _context.Entries.ToListAsync();
-            if (Request.Path.Value?.StartsWith("/api/") ?? false)
-                return Ok(entries);
-            else
-                return View(entries);
+            return View(entries);
         }
 
         // GET: Entries/Details/5
