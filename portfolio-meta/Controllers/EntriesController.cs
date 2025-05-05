@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using portfolio.Models;
 using portfolio.DataContext;
-using Microsoft.AspNetCore.Mvc.Filters;
+using portfolio.Models;
 
 namespace portfolio.Controllers
 {

@@ -27,18 +27,19 @@ namespace portfolio.Controllers
         // GET: EntryTags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            var entryTag = id.HasValue ? await _context.EntryTags.FirstOrDefaultAsync(m => m.ID == id) : null;
-            //if (entryTag == null)
-            //{
-            //    return NotFound();
-            //}
+            var entryTag = await _context.EntryTags
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (entryTag == null)
+            {
+                return NotFound();
+            }
 
-            return (entryTag == null) ? NotFound() : View(entryTag);
+            return View(entryTag);
         }
 
         // GET: EntryTags/Create
