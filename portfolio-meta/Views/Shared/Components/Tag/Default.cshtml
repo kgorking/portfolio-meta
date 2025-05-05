@@ -1,0 +1,16 @@
+@using portfolio.ViewComponents
+@model portfolio.Models.ViewModels.TagSelectionViewModel
+
+<div class="tag-selection">
+    @foreach (var tag in Model.Tags)
+    {
+        <div>
+            <input type="checkbox" 
+                   id="tag-@tag.ID" 
+                   name="SelectedTags" 
+                   value="@tag.ID" 
+                   @(Model.SelectedTagIds.Contains(tag.ID) ? "checked" : "") />
+            <label for="tag-@tag.ID">@tag.Title</label>
+        </div>
+    }
+</div>
