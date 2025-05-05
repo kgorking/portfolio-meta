@@ -8,33 +8,11 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Extract</th>
-                    <th>Content</th>
-                    <th>Created</th>
-                    <th>Last Updated</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Title</td>
-                    <td>@item.Extract</td>
-                    <td>@item.Content</td>
-                    <td>@item.Created</td>
-                    <td>@item.LastUpdated</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        @foreach (var item in Model)
+        {
+            <vc:entry entry="item" />
+        }
     </p>
-    <p><a href="/tags">Tags</a></p>
-    <p><a href="/entrytags">EntryTags</a></p>
 
     <!--
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

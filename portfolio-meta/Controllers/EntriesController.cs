@@ -79,7 +79,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Extract,Content")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Extract,Content")] Entry entry)
         {
             if (id != entry.ID)
             {
@@ -90,9 +90,17 @@ namespace portfolio.Controllers
             {
                 try
                 {
-                    entry.LastUpdated = DateTime.UtcNow;
-                    _context.Update(entry);
-                    await _context.SaveChangesAsync();
+                    //entry.LastUpdated = DateTime.UtcNow;
+                    //_context.Entries.Update(entry);
+                    //await _context.SaveChangesAsync();
+                    await _context.Entries
+                        .Where(e => e.ID == entry.ID)
+                        .ExecuteUpdateAsync(p => p
+                            .SetProperty(e => e.Title, e => entry.Title)
+                            .SetProperty(e => e.Extract, e => entry.Extract)
+                            .SetProperty(e => e.Content, e => entry.Content)
+                            .SetProperty(e => e.LastUpdated, e => DateTime.UtcNow)
+                    );
                 }
                 catch (DbUpdateConcurrencyException)
                 {

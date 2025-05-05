@@ -1,0 +1,11 @@
+@model portfolio.Models.Entry
+
+<div class="entry-container card-body d-flex">
+    <div class="entry-image">
+        <img src="@Model.ImageUrl" alt="@Model.Extract" class="img-fluid"/>
+    </div>
+    <div class="entry-content">
+        <h3>@Model.Title</h3>
+        <p>@Model.Content</p>
+    </div>
+</div>

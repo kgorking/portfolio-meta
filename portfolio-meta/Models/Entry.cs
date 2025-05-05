@@ -16,6 +16,8 @@ namespace portfolio.Models
         [Required(ErrorMessage = "Content is required.")]
         public string? Content { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
     }
