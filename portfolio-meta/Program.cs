@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseInMemoryDatabase("TempDb"));
-//builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseInMemoryDatabase("TempDb"));
+builder.Services.AddDbContext<PortfolioContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 var app = builder.Build();
