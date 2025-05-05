@@ -12,7 +12,19 @@ namespace portfolio.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var entries = await _context.Entries.OrderBy(e => e.Created).ToListAsync();
+            var entries = await _context.Entries
+                .Select(e => {
+                    e.Tags = _context.Entries
+                        .Join(
+                            _context.Tags,
+                            entry => entry.ID,
+                            tag => tag.ID,
+                            (e, tag) => tag)
+                        .ToList();
+                    return e;
+                    })
+                .OrderBy(e => e.Created)
+                .ToListAsync();
             return View(entries);
         }
 

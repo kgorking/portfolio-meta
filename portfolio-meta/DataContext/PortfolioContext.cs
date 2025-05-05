@@ -26,7 +26,11 @@ namespace portfolio.DataContext
                 .HasIndex(entry => entry.Title)
                 .IsUnique();
 
-            // Enforce UTC for DateTime
+            //modelBuilder.Entity<Entry>()
+            //    .HasMany<EntryTag>(e => e.Tags)
+            //    ;
+
+            // Enforce UTC for DateTime on 'Created' and 'LastUpdated'
             modelBuilder.Entity<Entry>()
                 .Property(e => e.Created)
                 .HasConversion(

@@ -12,7 +12,9 @@ namespace portfolio.Controllers
         // GET: Entries
         public async Task<IActionResult> Index()
         {
-            var entries = await _context.Entries.ToListAsync();
+            var entries = await _context.Entries
+                .Include(e => e.Tags)
+                .ToListAsync();
             return View(entries);
         }
 

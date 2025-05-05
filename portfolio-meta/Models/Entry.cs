@@ -20,5 +20,7 @@ namespace portfolio.Models
 
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+
+        public List<Tag>? Tags { get; set; }
     }
 }
