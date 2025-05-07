@@ -45,14 +45,22 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,Url,Tags")] Entry entry)
+        public async Task<IActionResult> Create([Bind("Title,Content,Url,Tags")] Entry entry, IFormFile? Image)
         {
             if (ModelState.IsValid)
             {
-                entry.Created = DateTime.UtcNow;
-                entry.LastUpdated = DateTime.UtcNow;
                 _context.Add(entry);
                 await _context.SaveChangesAsync();
+
+                if (Image != null && Image.ContentType == "image/jpeg")
+                {
+                    var filePath = Path.Combine("wwwroot/img", $"{entry.ID}.jpg");
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Image.CopyToAsync(stream);
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(entry);

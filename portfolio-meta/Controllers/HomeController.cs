@@ -4,7 +4,6 @@ using portfolio.DataContext;
 using portfolio.Models;
 using portfolio.Models.ViewModels;
 using System.Diagnostics;
-using System.Linq;
 
 namespace portfolio.Controllers
 {
@@ -26,11 +25,6 @@ namespace portfolio.Controllers
                     })
                 .ToListAsync();
             return View(entries);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
