@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Url)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @(item.Content.Length > 50 ? item.Content.Substring(0, 50) + "..." : item.Content)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Created)

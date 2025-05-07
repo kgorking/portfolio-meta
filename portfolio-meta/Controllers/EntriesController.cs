@@ -12,7 +12,7 @@ namespace portfolio.Controllers
         // GET: Entries
         public async Task<IActionResult> Index()
         {
-            var entries = await _context.Entries.ToListAsync();
+            var entries = await _context.Entries.OrderBy(e => e.ID).ToListAsync();
             return View(entries);
         }
 
@@ -87,7 +87,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Extract,Content")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Url,Content")] Entry entry)
         {
             if (id != entry.ID)
             {
