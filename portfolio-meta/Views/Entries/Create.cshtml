@@ -18,17 +18,17 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Extract" class="control-label"></label>
-                <input asp-for="Extract" class="form-control" />
-                <span asp-validation-for="Extract" class="text-danger"></span>
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <vc:tag />
+                <vc:tag asp-for="Tags" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

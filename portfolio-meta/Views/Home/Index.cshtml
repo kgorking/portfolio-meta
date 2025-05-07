@@ -1,20 +1,24 @@
 ﻿@using portfolio.ViewComponents
-@model IEnumerable<portfolio.Models.Entry>
+@model IEnumerable<portfolio.Models.ViewModels.EntryWithTagsViewModel>
 
 @{
     ViewData["Title"] = "Kenneth Gorking";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>
-        @foreach (var item in Model)
-        {
-            <vc:entry entry="item" />
-        }
-    </p>
+<h1 class="display-4 text-center">Welcome!</h1>
 
-    <!--
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    -->
+<div class="center-screen entry-container card-body d-flex">
+    <div class="entry-image">
+        <img src="/img/1.jpg" alt="It's me! A handsome fella.'" class="img-fluid" />
+    </div>
+    <div class="entry-content">
+        <p>This is my website</p>
+        <p>Below are some of the projects I am working on.</p>
+        <p><a href="https://github.com/kgorking" target="_blank">link to my GitHub</a></p>
+    </div>
 </div>
+
+@foreach (var item in Model)
+{
+    <vc:entry entry="item" />
+}

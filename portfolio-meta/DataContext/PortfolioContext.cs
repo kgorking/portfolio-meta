@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using portfolio.Models;
+using portfolio.Models.ViewModels;
 
 namespace portfolio.DataContext
 {
@@ -7,15 +8,9 @@ namespace portfolio.DataContext
     {
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<EntryTag> EntryTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Ensure that only one EntryTag with a specific tag/entry id combination exists
-            modelBuilder.Entity<EntryTag>()
-                .HasIndex(et => new { et.EntryID, et.TagID })
-                .IsUnique();
-
             // Unique titles for tags
             modelBuilder.Entity<Tag>()
                 .HasIndex(tag => tag.Title)
@@ -25,10 +20,6 @@ namespace portfolio.DataContext
             modelBuilder.Entity<Entry>()
                 .HasIndex(entry => entry.Title)
                 .IsUnique();
-
-            //modelBuilder.Entity<Entry>()
-            //    .HasMany<EntryTag>(e => e.Tags)
-            //    ;
 
             // Enforce UTC for DateTime on 'Created' and 'LastUpdated'
             modelBuilder.Entity<Entry>()
@@ -65,6 +56,22 @@ namespace portfolio.DataContext
                 Console.WriteLine($"Database connection failed: {ex.Message}");
                 return false;
             }
+        }
+
+        public async Task<EntryWithTagsViewModel> GetEntryWithTagsAsync(int entryId)
+        {
+            var entry = await Entries.FindAsync(entryId);
+            if (entry == null) return null;
+
+            var tags = await Tags
+                .Where(tag => entry.Tags.Contains(tag.ID))
+                .ToListAsync();
+
+            return new EntryWithTagsViewModel
+            {
+                Entry = entry,
+                Tags = tags
+            };
         }
     }
 }

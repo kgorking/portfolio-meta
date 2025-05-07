@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using portfolio.Models;
+using portfolio.Models.ViewModels;
 
 namespace portfolio.ViewComponents
 {
     public class EntryViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(Entry entry)
+        public IViewComponentResult Invoke(EntryWithTagsViewModel entry)
         {
             return View(entry);
         }

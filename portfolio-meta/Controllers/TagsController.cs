@@ -10,14 +10,9 @@ using portfolio.Models;
 
 namespace portfolio.Controllers
 {
-    public class TagsController : Controller
+    public class TagsController(PortfolioContext context) : Controller
     {
-        private readonly PortfolioContext _context;
-
-        public TagsController(PortfolioContext context)
-        {
-            _context = context;
-        }
+        private readonly PortfolioContext _context = context;
 
         // GET: Tags
         public async Task<IActionResult> Index()

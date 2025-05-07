@@ -13,7 +13,6 @@ public class TestDbEntry
         var entry = new Entry
         {
             Title = "title test",
-            Extract = "a test of the entry model",
             Content = "123456abcdef",
             Created = DateTime.Now,
             LastUpdated = DateTime.Now
@@ -46,9 +45,8 @@ public class TestDbEntry
         using var ctx = new PortfolioContext(Config.DbOptions);
         var entry = new Entry
         {
-            Title = null,
-            Extract = null,
-            Content = null,
+            Title = "Title",
+            Content = "Content",
             Created = DateTime.Now,
             LastUpdated = DateTime.Now
         };

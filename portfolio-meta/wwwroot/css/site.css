@@ -39,6 +39,15 @@ body {
     text-align: left;
 }
 
+.tag-container {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    font-size: 12px;
+}
+
 .entry-image {
     margin-right: 20px;
     width: 150px;
@@ -46,4 +55,12 @@ body {
 
 .courier-textarea {
     font-family: 'Courier New', monospace;
+}
+
+.center-screen {
+    margin: auto;
+    margin-bottom: 15px;
+    width: 50%;
+    border: 1px solid #ccc;
+    padding: 10px;
 }

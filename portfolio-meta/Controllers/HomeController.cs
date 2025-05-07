@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using portfolio.DataContext;
 using portfolio.Models;
+using portfolio.Models.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 
 namespace portfolio.Controllers
 {
@@ -13,17 +15,15 @@ namespace portfolio.Controllers
         public async Task<IActionResult> Index()
         {
             var entries = await _context.Entries
-                .Select(e => {
-                    e.Tags = _context.Entries
-                        .Join(
-                            _context.Tags,
-                            entry => entry.ID,
-                            tag => tag.ID,
-                            (e, tag) => tag)
-                        .ToList();
-                    return e;
+                .OrderBy(entry => entry.Created)
+                .Select(entry =>
+                    new EntryWithTagsViewModel
+                    {
+                        Entry = entry,
+                        Tags = _context.Tags
+                            .Where(tag => entry.Tags.Contains(tag.ID))
+                            .ToList()
                     })
-                .OrderBy(e => e.Created)
                 .ToListAsync();
             return View(entries);
         }

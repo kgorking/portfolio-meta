@@ -12,9 +12,7 @@ namespace portfolio.Controllers
         // GET: Entries
         public async Task<IActionResult> Index()
         {
-            var entries = await _context.Entries
-                .Include(e => e.Tags)
-                .ToListAsync();
+            var entries = await _context.Entries.ToListAsync();
             return View(entries);
         }
 
@@ -47,7 +45,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Extract,Content")] Entry entry)
+        public async Task<IActionResult> Create([Bind("Title,Content,Url,Tags")] Entry entry)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +97,6 @@ namespace portfolio.Controllers
                         .Where(e => e.ID == entry.ID)
                         .ExecuteUpdateAsync(p => p
                             .SetProperty(e => e.Title, e => entry.Title)
-                            .SetProperty(e => e.Extract, e => entry.Extract)
                             .SetProperty(e => e.Content, e => entry.Content)
                             .SetProperty(e => e.LastUpdated, e => DateTime.UtcNow)
                     );
