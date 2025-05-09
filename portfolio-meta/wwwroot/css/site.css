@@ -29,3 +29,38 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Add a class for a small border with rounded corners */
+.entry-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.tag-container {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.entry-image {
+    margin-right: 20px;
+    width: 150px;
+}
+
+.courier-textarea {
+    font-family: 'Courier New', monospace;
+}
+
+.center-screen {
+    margin: auto;
+    margin-bottom: 15px;
+    width: 50%;
+    border: 1px solid #ccc;
+    padding: 10px;
+}

@@ -7,10 +7,10 @@
         <div>
             <input type="checkbox" 
                    id="tag-@tag.ID" 
-                   name="SelectedTags" 
+                   name="Tags" 
                    value="@tag.ID" 
                    @(Model.SelectedTagIds.Contains(tag.ID) ? "checked" : "") />
-            <label for="tag-@tag.ID">@tag.Title</label>
+            <label class="tag-container" for="tag-@tag.ID">@tag.Title</label>
         </div>
     }
 </div>

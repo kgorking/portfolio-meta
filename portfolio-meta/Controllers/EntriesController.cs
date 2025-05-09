@@ -10,15 +10,10 @@ namespace portfolio.Controllers
         private readonly PortfolioContext _context = context;
 
         // GET: Entries
-        [Route("entries")]
-        [Route("api/entries")]
         public async Task<IActionResult> Index()
         {
-            var entries = await _context.Entries.ToListAsync();
-            if (Request.Path.Value?.StartsWith("/api/") ?? false)
-                return Ok(entries);
-            else
-                return View(entries);
+            var entries = await _context.Entries.OrderBy(e => e.ID).ToListAsync();
+            return View(entries);
         }
 
         // GET: Entries/Details/5
@@ -50,14 +45,22 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Extract,Content")] Entry entry)
+        public async Task<IActionResult> Create([Bind("Title,Content,Url,Tags")] Entry entry, IFormFile? Image)
         {
             if (ModelState.IsValid)
             {
-                entry.Created = DateTime.UtcNow;
-                entry.LastUpdated = DateTime.UtcNow;
                 _context.Add(entry);
                 await _context.SaveChangesAsync();
+
+                if (Image != null && Image.ContentType == "image/jpeg")
+                {
+                    var filePath = Path.Combine("wwwroot/img", $"{entry.ID}.jpg");
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Image.CopyToAsync(stream);
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(entry);
@@ -84,7 +87,7 @@ namespace portfolio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Extract,Content")] Entry entry)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Url,Content")] Entry entry)
         {
             if (id != entry.ID)
             {
@@ -95,9 +98,16 @@ namespace portfolio.Controllers
             {
                 try
                 {
-                    entry.LastUpdated = DateTime.UtcNow;
-                    _context.Update(entry);
-                    await _context.SaveChangesAsync();
+                    //entry.LastUpdated = DateTime.UtcNow;
+                    //_context.Entries.Update(entry);
+                    //await _context.SaveChangesAsync();
+                    await _context.Entries
+                        .Where(e => e.ID == entry.ID)
+                        .ExecuteUpdateAsync(p => p
+                            .SetProperty(e => e.Title, e => entry.Title)
+                            .SetProperty(e => e.Content, e => entry.Content)
+                            .SetProperty(e => e.LastUpdated, e => DateTime.UtcNow)
+                    );
                 }
                 catch (DbUpdateConcurrencyException)
                 {

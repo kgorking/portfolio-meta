@@ -1,26 +1,30 @@
-using System.Diagnostics;
-using portfolio.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using portfolio.DataContext;
+using portfolio.Models;
+using portfolio.Models.ViewModels;
+using System.Diagnostics;
 
 namespace portfolio.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(PortfolioContext context) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly PortfolioContext _context = context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var entries = await _context.Entries
+                .OrderBy(entry => entry.Created)
+                .Select(entry =>
+                    new EntryWithTagsViewModel
+                    {
+                        Entry = entry,
+                        Tags = _context.Tags
+                            .Where(tag => entry.Tags.Contains(tag.ID))
+                            .ToList()
+                    })
+                .ToListAsync();
+            return View(entries);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

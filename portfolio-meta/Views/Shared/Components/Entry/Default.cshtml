@@ -1,0 +1,19 @@
+@using Markdig
+@model portfolio.Models.ViewModels.EntryWithTagsViewModel
+
+<div class="entry-container card-body d-flex">
+    <div class="entry-image">
+        <img src="/img/@(Model.Entry.ID).jpg" alt="" class="img-fluid" onerror="this.onerror=null; this.src='/img/test.jpg';" />
+    </div>
+    <div class="entry-content">
+        <h3>@Model.Entry.Title</h3>
+        <p>@Html.Raw(Markdown.ToHtml(Model.Entry.Content))</p>
+        <p><a href="@Model.Entry.Url" target="_blank">link</a></p>
+        <div class="tag-selection">
+            @foreach (var tag in Model.Tags)
+            {
+                <label class="tag-container" for="tag-@tag.ID">@tag.Title</label>
+            }
+        </div>
+    </div>
+</div>
