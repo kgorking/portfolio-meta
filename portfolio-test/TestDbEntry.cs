@@ -45,10 +45,7 @@ public class TestDbEntry
         using var ctx = new PortfolioContext(Config.DbOptions);
         var entry = new Entry
         {
-            Title = "Title",
-            Content = "Content",
-            Created = DateTime.Now,
-            LastUpdated = DateTime.Now
+            Title = null
         };
 
         ctx.Entries.Add(entry);
